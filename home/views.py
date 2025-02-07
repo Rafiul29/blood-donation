@@ -36,8 +36,10 @@ def request_blood(request):
 @login_required(login_url = '/login')
 def see_all_request(request):
     user_blood_group = request.user.donor.blood_group
+   
     requests = RequestBlood.objects.filter(blood_group=user_blood_group)
-    # requests = RequestBlood.objects.all()
+    print(requests,user_blood_group)
+    requests = RequestBlood.objects.all()
     return render(request, "see_all_request.html", {'requests':requests})
 
 def become_donor(request):
@@ -165,3 +167,12 @@ def change_status(request):
         donor_profile.ready_to_donate = True
         donor_profile.save()
     return redirect('/profile')
+
+
+@login_required(login_url='/login')
+def request_status(request, brid):
+        request_blood = RequestBlood.objects.get(id=brid)
+        request_blood.status = not request_blood.status
+        request_blood.save()
+    
+        return redirect('/see_all_request')

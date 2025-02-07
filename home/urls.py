@@ -13,4 +13,5 @@ urlpatterns = [
     path('profile/', views.profile, name='profile'),
     path('edit_profile/', views.edit_profile, name='edit_profile'),
     path('change_status/', views.change_status, name='change_status'),
+    path('request_status/<int:brid>', views.request_status, name='request_status'),
 ]
